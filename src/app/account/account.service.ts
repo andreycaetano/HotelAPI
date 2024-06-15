@@ -16,7 +16,7 @@ export class AccountService {
       password: await bcrypt.hash(createAccountDto.password, 10)
     };
 
-    const createdAccount = await this.prisma.account.create({ data });
+    const createdAccount = await this.prisma.account.create({ data: {...data} });
     return {
       ...createdAccount,
       password: undefined
