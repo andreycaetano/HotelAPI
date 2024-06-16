@@ -1,18 +1,23 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
-import { AccountModule } from './app/account/account.module';
-import { PrismaModule } from './database/prisma/prisma.module';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { AccountModule } from './app/account/account.module';
 import { AuthModule } from './app/auth/auth.module';
 import { JwtAuthGuard } from './app/auth/guards/jwtAuth.guard';
-import { ErrorMiddleware } from './common/middlewares/error.middleware';
-import { LoggerModule } from './common/logger/logger.module';
 import { AllExceptionsFilter } from './common/filters/allExceptions.filter';
 import { ValidationExceptionFilter } from './common/filters/validationException.filter';
+import { LoggerModule } from './common/logger/logger.module';
 import { CustomLoggerService } from './common/logger/logger.service';
-
+import { ErrorMiddleware } from './common/middlewares/error.middleware';
+import { PrismaModule } from './database/prisma/prisma.module';
 
 @Module({
-  imports: [PrismaModule, AccountModule, AuthModule, LoggerModule, LoggerModule],
+  imports: [
+    PrismaModule,
+    AccountModule,
+    AuthModule,
+    LoggerModule,
+    LoggerModule,
+  ],
   controllers: [],
   providers: [
     CustomLoggerService,

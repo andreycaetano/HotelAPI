@@ -20,3 +20,16 @@ model Account {
   email       String    @unique @db.VarChar(255)
   role        String    @default("user") @db.VarChar(5)
 }
+
+model Country {
+  id          String    @id @default(uuid())
+  name        String    @unique   @db.VarChar(255)
+  cities      City[]
+}
+
+model City {
+  id          String    @id @default(uuid())
+  name        String    @db.VarChar(255)
+  country     Country   @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId   String
+}
