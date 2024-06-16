@@ -5,6 +5,7 @@ import { PrismaService } from 'src/database/prisma/prisma.service';
 import { Account } from './entities/account.entity';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { AccountConflictException } from './errors/accountConflict.error';
 
 @Injectable()
 export class AccountService {
@@ -15,11 +16,16 @@ export class AccountService {
       ...createAccountDto,
       password: await bcrypt.hash(createAccountDto.password, 10)
     };
-
-    const createdAccount = await this.prisma.account.create({ data: {...data} });
-    return {
-      ...createdAccount,
-      password: undefined
+    try {
+      const createdAccount = await this.prisma.account.create({ data });
+      return {
+        ...createdAccount,
+        password: undefined
+      };
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new AccountConflictException();
+      };
     };
   };
 

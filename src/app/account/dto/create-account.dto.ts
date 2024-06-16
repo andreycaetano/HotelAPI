@@ -1,5 +1,6 @@
 import { 
     IsEmail,
+    IsNotEmpty,
     IsOptional,
     IsString,
     Matches,
@@ -11,17 +12,20 @@ import { Account } from "../entities/account.entity";
 export class CreateAccountDto extends Account {
 
     @IsString()
+    @MinLength(3, { message: 'The username must be at least 3 characters long' })
+    @MaxLength(20, { message: 'The username must not exceed 20 characters' })
     username: string;
 
-    @IsString()
-    @MinLength(4)
-    @MaxLength(20)
+    @IsString({message: 'Password is required'})
+    @MinLength(6, {message: 'The password must be at least 6 characters long'})
+    @MaxLength(20, {message: 'The password must not exceed 20 characters'})
     @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
         message: 'password too weak',
     })
     password: string;
 
-    @IsEmail()
+    @IsNotEmpty({message: "Email is required"})
+    @IsEmail({}, {message: 'The email must be a valid email address'})
     email: string;
 
     @IsOptional()

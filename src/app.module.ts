@@ -7,12 +7,15 @@ import { JwtAuthGuard } from './app/auth/guards/jwtAuth.guard';
 import { ErrorMiddleware } from './common/middlewares/error.middleware';
 import { LoggerModule } from './common/logger/logger.module';
 import { AllExceptionsFilter } from './common/filters/allExceptions.filter';
+import { ValidationExceptionFilter } from './common/filters/validationException.filter';
+import { CustomLoggerService } from './common/logger/logger.service';
 
 
 @Module({
   imports: [PrismaModule, AccountModule, AuthModule, LoggerModule, LoggerModule],
   controllers: [],
   providers: [
+    CustomLoggerService,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard
@@ -20,6 +23,10 @@ import { AllExceptionsFilter } from './common/filters/allExceptions.filter';
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ValidationExceptionFilter
     }
   ],
 })
