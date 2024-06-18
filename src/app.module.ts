@@ -12,6 +12,7 @@ import { PrismaModule } from './database/prisma/prisma.module';
 import { CountryModule } from './app/address/country/country.module';
 import { CityModule } from './app/address/city/city.module';
 import { TravelTimeModule } from './app/travel-time/travel-time.module';
+import { SportModule } from './app/sport/sport.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TravelTimeModule } from './app/travel-time/travel-time.module';
     CountryModule,
     CityModule,
     TravelTimeModule,
+    SportModule,
   ],
   controllers: [],
   providers: [
