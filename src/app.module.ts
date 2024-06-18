@@ -1,20 +1,21 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { AccountModule } from './app/account/account.module';
+import { CityModule } from './app/address/city/city.module';
+import { CountryModule } from './app/address/country/country.module';
 import { AuthModule } from './app/auth/auth.module';
 import { JwtAuthGuard } from './app/auth/guards/jwtAuth.guard';
+import { ConditionModule } from './app/condition/condition.module';
+import { RatingModule } from './app/rating/rating.module';
+import { SportModule } from './app/sport/sport.module';
+import { TravelTimeModule } from './app/travel-time/travel-time.module';
 import { AllExceptionsFilter } from './common/filters/allExceptions.filter';
 import { ValidationExceptionFilter } from './common/filters/validationException.filter';
 import { LoggerModule } from './common/logger/logger.module';
 import { CustomLoggerService } from './common/logger/logger.service';
 import { ErrorMiddleware } from './common/middlewares/error.middleware';
 import { PrismaModule } from './database/prisma/prisma.module';
-import { CountryModule } from './app/address/country/country.module';
-import { CityModule } from './app/address/city/city.module';
-import { TravelTimeModule } from './app/travel-time/travel-time.module';
-import { SportModule } from './app/sport/sport.module';
-import { RatingModule } from './app/rating/rating.module';
-import { ConditionModule } from './app/condition/condition.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ConditionModule } from './app/condition/condition.module';
     SportModule,
     RatingModule,
     ConditionModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [
