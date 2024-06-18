@@ -14,6 +14,7 @@ import { CityModule } from './app/address/city/city.module';
 import { TravelTimeModule } from './app/travel-time/travel-time.module';
 import { SportModule } from './app/sport/sport.module';
 import { RatingModule } from './app/rating/rating.module';
+import { ConditionModule } from './app/condition/condition.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RatingModule } from './app/rating/rating.module';
     TravelTimeModule,
     SportModule,
     RatingModule,
+    ConditionModule,
   ],
   controllers: [],
   providers: [

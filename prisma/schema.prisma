@@ -15,29 +15,30 @@ datasource db {
 
 model Account {
   id          String    @id @default(uuid())
-  username    String    @db.VarChar(255)    @unique 
+  username    String    @db.VarChar(255)      @unique 
   password    String    @db.VarChar(255)
-  email       String    @unique @db.VarChar(255)
-  role        String    @db.VarChar(5)    @default("user") 
+  email       String    @db.VarChar(255)      @unique 
+  role        String    @db.VarChar(5)        @default("user") 
 }
 
 model Country {
   id          String    @id @default(uuid())
-  name        String    @db.VarChar(255)   @unique
+  name        String    @db.VarChar(255)      @unique
+
   cities      City[]
 }
 
 model City {
   id          String    @id @default(uuid())
   name        String    @db.VarChar(255)
+
   countryId   String
-  
   country     Country   @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model TravelTime {
   id            String    @id @default(uuid())
-  travel_time   String    @unique   @db.VarChar(255)    
+  travel_time   String    @db.VarChar(255)    @unique   
 }
 
 model Sports {
@@ -48,4 +49,9 @@ model Sports {
 model Ratings {
   id            String    @id @default(uuid())
   rating        String    @db.VarChar(255)    @unique
+}
+
+model Conditions {
+  id            String    @id @default(uuid())
+  condition     String    @db.VarChar(255)    @unique
 }
