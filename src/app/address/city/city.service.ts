@@ -30,7 +30,7 @@ export class CityService {
   async findOne(id: string): Promise<City> {
     const findCity = await this.prisma.city.findUnique({ where: { id }});
     if (!findCity) {
-      throw new CityNotFoundException();
+      throw new CityNotFoundException(id);
     };
     return findCity;
   }

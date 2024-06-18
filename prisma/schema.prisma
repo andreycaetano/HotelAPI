@@ -34,3 +34,8 @@ model City {
   
   country     Country   @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
+
+model TravelTime {
+  id            String    @id @default(uuid())
+  travel_time   String    @db.VarChar(255)    @unique
+}

@@ -30,7 +30,7 @@ export class CountryService {
       }
     });
     if (!findCountry) {
-      throw new CountryNotFoundException();
+      throw new CountryNotFoundException(id);
     };
     return findCountry;
   };

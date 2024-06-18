@@ -11,6 +11,7 @@ import { ErrorMiddleware } from './common/middlewares/error.middleware';
 import { PrismaModule } from './database/prisma/prisma.module';
 import { CountryModule } from './app/address/country/country.module';
 import { CityModule } from './app/address/city/city.module';
+import { TravelTimeModule } from './app/travel-time/travel-time.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CityModule } from './app/address/city/city.module';
     LoggerModule,
     CountryModule,
     CityModule,
+    TravelTimeModule,
   ],
   controllers: [],
   providers: [
