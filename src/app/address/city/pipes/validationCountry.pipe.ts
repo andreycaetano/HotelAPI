@@ -1,6 +1,4 @@
 import { ArgumentMetadata, Injectable, NotFoundException, PipeTransform } from "@nestjs/common";
-import { CountryService } from "../../country/country.service";
-import { CountryNotFoundException } from "../../country/errors/countryNotFoundException.error";
 import { PrismaService } from "src/database/prisma/prisma.service";
 
 @Injectable()
