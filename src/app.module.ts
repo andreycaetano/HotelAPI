@@ -13,6 +13,7 @@ import { CountryModule } from './app/address/country/country.module';
 import { CityModule } from './app/address/city/city.module';
 import { TravelTimeModule } from './app/travel-time/travel-time.module';
 import { SportModule } from './app/sport/sport.module';
+import { RatingModule } from './app/rating/rating.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { SportModule } from './app/sport/sport.module';
     CityModule,
     TravelTimeModule,
     SportModule,
+    RatingModule,
   ],
   controllers: [],
   providers: [

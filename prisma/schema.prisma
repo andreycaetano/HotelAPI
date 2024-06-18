@@ -44,3 +44,8 @@ model Sports {
   id            String    @id @default(uuid())
   sport         String    @db.VarChar(255)    @unique
 }
+
+model Ratings {
+  id            String    @id @default(uuid())
+  rating        String    @db.VarChar(255)    @unique
+}
