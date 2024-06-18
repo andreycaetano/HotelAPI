@@ -9,6 +9,8 @@ import { LoggerModule } from './common/logger/logger.module';
 import { CustomLoggerService } from './common/logger/logger.service';
 import { ErrorMiddleware } from './common/middlewares/error.middleware';
 import { PrismaModule } from './database/prisma/prisma.module';
+import { CountryModule } from './app/address/country/country.module';
+import { CityModule } from './app/address/city/city.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { PrismaModule } from './database/prisma/prisma.module';
     AuthModule,
     LoggerModule,
     LoggerModule,
+    CountryModule,
+    CityModule,
   ],
   controllers: [],
   providers: [
