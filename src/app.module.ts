@@ -16,6 +16,7 @@ import { CustomLoggerService } from './common/logger/logger.service';
 import { ErrorMiddleware } from './common/middlewares/error.middleware';
 import { PrismaModule } from './database/prisma/prisma.module';
 import { UploadModule } from './upload/upload.module';
+import { FacilityModule } from './app/facility/facility.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UploadModule } from './upload/upload.module';
     RatingModule,
     ConditionModule,
     UploadModule,
+    FacilityModule,
   ],
   controllers: [],
   providers: [

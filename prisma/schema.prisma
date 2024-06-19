@@ -55,3 +55,9 @@ model Conditions {
   id            String    @id @default(uuid())
   condition     String    @db.VarChar(255)    @unique
 }
+
+model Facilities {
+  id            String    @id @default(uuid())
+  facility      String    @db.VarChar(255)
+  icon          String    @db.VarChar(255)
+}

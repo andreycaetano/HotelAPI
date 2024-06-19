@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { S3Client } from '@aws-sdk/client-s3';
-import * as multer from 'multer';
-import * as multerS3 from 'multer-s3';
+import { S3Client, PutObjectCommand, PutObjectCommandOutput, ObjectCannedACL, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 @Injectable()
 export class UploadService {
@@ -19,16 +17,44 @@ export class UploadService {
     });
   }
 
-  getMulterS3Options(prefix: string) {
-    return multer({
-      storage: multerS3({
-        s3: this.s3,
-        bucket: process.env.AWS_S3_BUCKET_NAME,
-        acl: 'public-read',
-        key: (req, file, cb) => {
-          cb(null, `${prefix}/${Date.now().toString()}-${file.originalname}`);
-        },
-      }),
-    });
+  async uploadFile(file: Express.Multer.File, prefix: string): Promise<string> {
+    const key = `${prefix}/${Date.now().toString()}-${file.originalname}`;
+
+    const uploadParams = {
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: key,
+      Body: file.buffer,
+      ACL: 'public-read' as ObjectCannedACL,
+    };
+
+    const command = new PutObjectCommand(uploadParams);
+
+    try {
+      await this.s3.send(command);
+      
+      const objectUrl = `${process.env.AWS_S3_ENDPOINT}/${process.env.AWS_S3_BUCKET_NAME}/${key}`;
+      
+      return objectUrl;
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      throw error;
+    }
+  }
+
+  async deleteFile(key: string): Promise<void> {
+    const deleteParams = {
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: key, 
+    };
+
+    const command = new DeleteObjectCommand(deleteParams);
+
+    try {
+      await this.s3.send(command);
+      console.log(`Deleted file ${key} from S3`);
+    } catch (error) {
+      console.error('Error deleting file:', error);
+      throw error;
+    }
   }
 }
