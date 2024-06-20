@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreateFacilityDto } from './dto/create-facility.dto';
 import { UpdateFacilityDto } from './dto/update-facility.dto';
 import { PrismaService } from 'src/database/prisma/prisma.service';
@@ -61,6 +61,18 @@ export class FacilityService {
 
   async remove(id: string): Promise<void> {
     const findFacility = await this.findOne(id);
+    const hotelWithFacility = await this.prisma.hotel.findMany({
+      where: {
+        facilities: {
+          some: {
+            id: id
+          }
+        }
+      }
+    })
+    if (hotelWithFacility.length > 0) {
+      throw new UnprocessableEntityException(`Cannot delete facility with ID ${id} because it is associated with ${hotelWithFacility.length} hotels.`)
+    }
     await this.upload.deleteFile(findFacility.icon);
     await this.prisma.facilities.delete({ where: { id }})
   }

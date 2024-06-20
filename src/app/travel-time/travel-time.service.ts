@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { CreateTravelTimeDto } from './dto/create-travel-time.dto';
 import { UpdateTravelTimeDto } from './dto/update-travel-time.dto';
 import { TravelTime } from './entities/travel-time.entity';
@@ -43,6 +43,14 @@ export class TravelTimeService {
 
   async remove(id: string): Promise<void> {
     await this.findOne(id)
+    const hotelsWithTravelTime = await this.prisma.hotel.findMany({
+      where: {
+        travelTime: { id: id }
+      }
+    });
+    if (hotelsWithTravelTime.length > 0) {
+      throw new UnprocessableEntityException(`Cannot delete travel time with ID ${id} because it is associated with ${hotelsWithTravelTime.length} hotels.`);
+    }
     await this.prisma.travelTime.delete({ where: { id }})
   }
 }

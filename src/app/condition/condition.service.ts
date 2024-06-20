@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreateConditionDto } from './dto/create-condition.dto';
 import { UpdateConditionDto } from './dto/update-condition.dto';
 import { Prisma } from '@prisma/client';
@@ -40,6 +40,18 @@ export class ConditionService {
 
   async remove(id: string): Promise<void> {
     await this.findOne(id);
+    const hotelWithCondition = await this.prisma.hotel.findMany({
+      where: {
+        conditions: {
+          some: {
+            id: id
+          }
+        }
+      }
+    })
+    if (hotelWithCondition.length > 0) {
+      throw new UnprocessableEntityException(`Cannot delete condition with ID ${id} because it is associated with ${hotelWithCondition.length} hotels.`)
+    }
     await this.prisma.conditions.delete({ where: { id }});
   }
 }

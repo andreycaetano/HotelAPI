@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
 import { Sport } from './entities/sport.entity';
@@ -40,6 +40,16 @@ export class SportService {
 
   async remove(id: string): Promise<void> {
     await this.findOne(id)
+    const hotelsWithSport = await this.prisma.hotel.findMany({
+      where: {
+        sports: {
+          some: { id: id }
+        }
+      }
+    });
+    if (hotelsWithSport.length > 0) {
+      throw new UnprocessableEntityException(`Cannot delete sport with ID ${id} because it is associated with ${hotelsWithSport.length} hotels.`);
+    }
     await this.prisma.sports.delete({ where: { id }});
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreateCityDto } from './dto/create-city.dto';
 import { UpdateCityDto } from './dto/update-city.dto';
 import { City } from './entities/city.entity';
@@ -49,6 +49,14 @@ export class CityService {
 
   async remove(id: string): Promise<void> {
     await this.findOne(id);
+    const hotelWithCity = await this.prisma.hotel.findMany({
+      where: {
+        city: {id: id}
+      }
+    })
+    if (hotelWithCity.length > 0) {
+      throw new UnprocessableEntityException(`Cannot delete city with ID ${id} because it is associated with ${hotelWithCity.length} hotels.`)
+    }
     await this.prisma.city.delete({ where: { id }})
   }
 }

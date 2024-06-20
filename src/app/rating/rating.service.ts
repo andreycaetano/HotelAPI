@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
 import { PrismaService } from 'src/database/prisma/prisma.service';
@@ -40,6 +40,14 @@ export class RatingService {
 
   async remove(id: string): Promise<void> {
     await this.findOne(id);
+    const hotelWithRating = await this.prisma.hotel.findMany({
+      where: {
+        ratings: { id: id }
+      }
+    })
+    if (hotelWithRating.length > 0) {
+      throw new UnprocessableEntityException(`Cannot delete rating with ID ${id} because it is associated with ${hotelWithRating.length} hotels.`)
+    }
     await this.prisma.ratings.delete({ where: { id }});
   };
 };
