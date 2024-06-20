@@ -246,4 +246,36 @@ export class HotelService {
       sports: true
     }
   }
+
+  async deleteImageHotel(id: string): Promise<void> {
+    const findImage = await this.prisma.hotelImages.findUnique({ where: { id } });
+    if (!findImage) {
+      throw new NotFoundException(`Hotel image with ID ${id} not found.`);
+    }
+  
+    const hotel = await this.prisma.hotel.findFirst({
+      where: { images: { some: { id } } },
+      include: { images: true },
+    });
+    if (!hotel) {
+      throw new NotFoundException(`Hotel with image ID ${id} not found.`);
+    }
+  
+    await this.prisma.$transaction(async (prisma) => {
+      try {
+        await this.upload.deleteFile(findImage.path);
+        const filterImages = hotel.images.filter((image) => image.id !== id);
+        await prisma.hotel.update({
+          where: { id: hotel.id },
+          data: {
+            images: {
+              connect: filterImages.map((image) => ({ id: image.id })),
+            },
+          },
+        });
+      } catch (error) {
+        throw new Error(`Failed to delete image ${id} from hotel: ${error.message}`);
+      }
+    });
+  }
 }

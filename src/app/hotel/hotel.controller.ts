@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
@@ -42,8 +42,15 @@ export class HotelController {
     return this.hotelService.update(id, updateHotelDto);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.hotelService.remove(id);
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete('image/:id')
+  deleteImageHotel(@Param('id') id: string) {
+    return this.hotelService.deleteImageHotel(id);
   }
 }
