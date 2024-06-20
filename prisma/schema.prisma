@@ -129,3 +129,8 @@ model Hotel {
   card        Card         @relation(fields: [cardId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   description Descriptions @relation(fields: [descriptionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
+
+model Galery {
+  id            String        @id @default(uuid())
+  path          String        @db.VarChar()
+}

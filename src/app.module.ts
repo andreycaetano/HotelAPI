@@ -18,6 +18,8 @@ import { ErrorMiddleware } from './common/middlewares/error.middleware';
 import { PrismaModule } from './database/prisma/prisma.module';
 import { UploadModule } from './upload/upload.module';
 import { HotelModule } from './app/hotel/hotel.module';
+import { MailchimpModule } from './app/mailchimp/mailchimp.module';
+import { GaleryModule } from './app/galery/galery.module';
 
 @Module({
   imports: [
@@ -35,6 +37,8 @@ import { HotelModule } from './app/hotel/hotel.module';
     UploadModule,
     FacilityModule,
     HotelModule,
+    MailchimpModule,
+    GaleryModule,
   ],
   controllers: [],
   providers: [
