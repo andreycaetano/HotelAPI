@@ -4,6 +4,7 @@ import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { HotelService } from './hotel.service';
 import { SearchHotelDto } from './dto/search-hotel.dto';
+import { IsPublic } from '../auth/decorators/isPublic.decorator';
 
 @Controller('hotel')
 export class HotelController {
@@ -27,11 +28,13 @@ export class HotelController {
     return this.hotelService.create(createHotelDto, files);
   }
 
+  @IsPublic()
   @Get()
   findAll(@Query() searchHotelDto: SearchHotelDto) {
     return this.hotelService.findAll(searchHotelDto);
   }
 
+  @IsPublic()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.hotelService.findOne(id);
