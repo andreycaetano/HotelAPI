@@ -25,6 +25,7 @@ export class HotelController {
     @Body() createHotelDto: CreateHotelDto,
     @UploadedFiles() files: Array<Express.Multer.File>
   ) {
+    console.log(createHotelDto);    
     return this.hotelService.create(createHotelDto, files);
   }
 

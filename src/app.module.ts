@@ -64,4 +64,3 @@ export class AppModule {
       .forRoutes({path: '*', method: RequestMethod.ALL });
   }
 }
-
