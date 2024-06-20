@@ -40,6 +40,7 @@ model City {
 model TravelTime {
   id          String @id @default(uuid())
   travel_time String @unique @db.VarChar(255)
+  hotel       Hotel[]
 }
 
 model Sports {
@@ -120,7 +121,9 @@ model Hotel {
   conditions    Conditions[]
   facilities    Facilities[]
   sports        Sports[]
+  travelTimeId String  
 
+  travelTime TravelTime    @relation(fields: [travelTimeId], references: [id])
   ratings     Ratings      @relation(fields: [ratingId], references: [id])
   city        City         @relation(fields: [cityId], references: [id])
   card        Card         @relation(fields: [cardId], references: [id], onDelete: Cascade, onUpdate: Cascade)

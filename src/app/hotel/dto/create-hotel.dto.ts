@@ -25,6 +25,9 @@ export class CreateHotelDto {
     @IsString()
     sports: string;
 
+    @IsString()
+    travelTime: string;
+
     @IsJSON()
     card: CreateCardDto
 

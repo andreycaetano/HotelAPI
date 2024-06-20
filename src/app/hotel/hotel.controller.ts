@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { HotelService } from './hotel.service';
+import { SearchHotelDto } from './dto/search-hotel.dto';
 
 @Controller('hotel')
 export class HotelController {
@@ -27,8 +28,8 @@ export class HotelController {
   }
 
   @Get()
-  findAll() {
-    return this.hotelService.findAll();
+  findAll(@Query() searchHotelDto: SearchHotelDto) {
+    return this.hotelService.findAll(searchHotelDto);
   }
 
   @Get(':id')

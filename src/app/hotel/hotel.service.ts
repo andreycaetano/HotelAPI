@@ -5,9 +5,9 @@ import { UploadService } from 'src/upload/upload.service';
 import { CardService } from './card/card.service';
 import { DescriptionService } from './description/description.service';
 import { CreateHotelDto } from './dto/create-hotel.dto';
+import { SearchHotelDto } from './dto/search-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { HotelImagesService } from './hotel-images/hotel-images.service';
-import { NotFound } from '@aws-sdk/client-s3';
 
 @Injectable()
 export class HotelService {
@@ -40,6 +40,9 @@ export class HotelService {
       sports: {
         connect: JSON.parse(createHotelDto.sports).map((sportId: string) => ({ id: sportId }))
       },
+      travelTime: {
+        connect: JSON.parse(createHotelDto.travelTime).map((travelTimeId: string) => ({ id: travelTimeId }))
+      },
       promotion: Boolean(createHotelDto.promotion),
     }
     const createdHotel = await this.prisma.hotel.create({ data });
@@ -55,8 +58,75 @@ export class HotelService {
     return await this.findOne(createdHotel.id);
   }
 
-  async findAll() {
-    return await this.prisma.hotel.findMany({select: this.allIncludeRelation()});
+  async findAll(searchHotelDto: SearchHotelDto) {
+    const { name, ratingId, cityId, condition, travelTime, sport, city, facilities } = searchHotelDto;
+
+    const where: any = {};
+
+    if (name && name.length > 0) {
+      where.name = {
+        in: name,
+      };
+    }
+
+    if (ratingId && ratingId.length > 0) {
+      where.ratings = {
+        some: {
+          id: {
+            in: ratingId,
+          },
+        },
+      };
+    }
+
+    if (cityId && cityId.length > 0) {
+      where.cityId = {
+        in: cityId,
+      };
+    }
+
+    if (condition && condition.length > 0) {
+      where.conditions = {
+        some: {
+          id: {
+            in: condition,
+          },
+        },
+      };
+    }
+
+    if (travelTime && travelTime.length > 0) {
+      where.travelTimeId = {
+        in: travelTime,
+      };
+    }
+
+    if (sport && sport.length > 0) {
+      where.sports = {
+        some: {
+          id: {
+            in: sport,
+          },
+        },
+      };
+    }
+
+    if (city && city.length > 0) {
+      where.city = {
+        in: city,
+      };
+    }
+
+    if (facilities && facilities.length > 0) {
+      where.facilities = {
+        some: {
+          id: {
+            in: facilities,
+          },
+        },
+      };
+    }
+    return await this.prisma.hotel.findMany({where ,select: this.allIncludeRelation()});
   }
 
   async findOne(id: string) {
@@ -110,7 +180,12 @@ export class HotelService {
           connect: JSON.parse(updateHotelDto.sports).map((sportId: string) => ({ id: sportId }))
         }
       }),
-      ...(updateHotelDto.promotion !== undefined && { promotion: Boolean(updateHotelDto.promotion)})
+      ...(updateHotelDto.promotion !== undefined && { promotion: Boolean(updateHotelDto.promotion)}),
+      ...(updateHotelDto.travelTime && {
+        travelTime: {
+          connect: JSON.parse(updateHotelDto.travelTime).map((travelTimeId: string) => ({ id: travelTimeId }))
+        }
+      })
     }
 
     await this.prisma.hotel.update({
@@ -153,6 +228,7 @@ export class HotelService {
           comment: true
         }
       },
+      travelTime: true,
       movie: true,
       images: true,
       promotion: true,
