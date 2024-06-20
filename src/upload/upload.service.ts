@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { S3Client, PutObjectCommand, PutObjectCommandOutput, ObjectCannedACL, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 @Injectable()
@@ -18,7 +18,8 @@ export class UploadService {
   }
 
   async uploadFile(file: Express.Multer.File, prefix: string): Promise<string> {
-    const key = `${prefix}/${Date.now().toString()}-${file.originalname}`;
+    const sanitizedFileName = file.originalname.replace(/\s+/g, '_');
+    const key = `${prefix}/${Date.now().toString()}-${sanitizedFileName}`;
 
     const uploadParams = {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
@@ -31,9 +32,9 @@ export class UploadService {
 
     try {
       await this.s3.send(command);
-      
-      const objectUrl = `${process.env.AWS_S3_ENDPOINT}/${process.env.AWS_S3_BUCKET_NAME}/${key}`;
-      
+
+      const objectUrl = `${process.env.AWS_S3_BUCKET_NAME}/${key}`;
+
       return objectUrl;
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -44,7 +45,7 @@ export class UploadService {
   async deleteFile(key: string): Promise<void> {
     const deleteParams = {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
-      Key: key, 
+      Key: key,
     };
 
     const command = new DeleteObjectCommand(deleteParams);
@@ -56,5 +57,22 @@ export class UploadService {
       console.error('Error deleting file:', error);
       throw error;
     }
+  }
+
+  groupFilesByField(files: Array<Express.Multer.File>, allowedFields: string[]) {
+    const filesByField = files.reduce((acc, file) => {
+      if (allowedFields.includes(file.fieldname)) {
+        if (!acc[file.fieldname]) {
+          acc[file.fieldname] = [];
+        }
+        acc[file.fieldname].push(file);
+      }
+      return acc;
+    }, {});
+    const invalidFields = Object.keys(filesByField).filter(field => !allowedFields.includes(field));
+    if (invalidFields.length > 0) {
+      throw new BadRequestException(`Fields ${invalidFields.join(', ')} are not allowed`);
+    }
+    return filesByField
   }
 }

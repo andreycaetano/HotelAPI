@@ -6,6 +6,7 @@ import { CountryModule } from './app/address/country/country.module';
 import { AuthModule } from './app/auth/auth.module';
 import { JwtAuthGuard } from './app/auth/guards/jwtAuth.guard';
 import { ConditionModule } from './app/condition/condition.module';
+import { FacilityModule } from './app/facility/facility.module';
 import { RatingModule } from './app/rating/rating.module';
 import { SportModule } from './app/sport/sport.module';
 import { TravelTimeModule } from './app/travel-time/travel-time.module';
@@ -16,7 +17,7 @@ import { CustomLoggerService } from './common/logger/logger.service';
 import { ErrorMiddleware } from './common/middlewares/error.middleware';
 import { PrismaModule } from './database/prisma/prisma.module';
 import { UploadModule } from './upload/upload.module';
-import { FacilityModule } from './app/facility/facility.module';
+import { HotelModule } from './app/hotel/hotel.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { FacilityModule } from './app/facility/facility.module';
     ConditionModule,
     UploadModule,
     FacilityModule,
+    HotelModule,
   ],
   controllers: [],
   providers: [
