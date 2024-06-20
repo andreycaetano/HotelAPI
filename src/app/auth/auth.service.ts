@@ -1,10 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserPayload } from './models/UserPayload';
 import { UserToken } from './models/UserToken';
 import { AccountService } from '../account/account.service';
 import { Account } from '../account/entities/account.entity';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
     };
 
     return {
-      access_token: this.jwtService.sign(payload),
+      token: this.jwtService.sign(payload),
       role: user.role,
       user: user.username
     };
@@ -45,5 +46,21 @@ export class AuthService {
     throw new UnauthorizedException(
       'Email address or password provided is incorrect.',
     );
+  }
+
+  async verifyToken (request: Request) {
+    const token = request.headers.authorization?.replace("Bearer ", "");
+    if (!token) {
+      throw new BadRequestException(401, "Token is required",);
+   }
+   try {
+     const decode = this.jwtService.verify(token)
+     return {
+      valid: true,
+      role: decode.role
+     }
+   } catch (error) {
+    throw new UnauthorizedException('Token invalid')
+   }
   }
 }

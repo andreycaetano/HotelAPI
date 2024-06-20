@@ -22,4 +22,9 @@ export class AuthController {
   async login(@Request() req: AuthRequest) {
     return this.authService.login(req.user);
   }
+
+  @Post('verifyToken')
+  async verifyToken(@Request() req) {
+    return this.authService.verifyToken(req)
+  }
 }
