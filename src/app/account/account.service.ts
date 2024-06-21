@@ -80,6 +80,6 @@ export class AccountService {
 
   async remove(id: string): Promise<void> {
     await this.findOne(id)
-    this.prisma.account.delete({ where: { id }});
+    await this.prisma.account.delete({ where: { id }});
   }
 }

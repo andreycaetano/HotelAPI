@@ -45,7 +45,9 @@ export class TravelTimeService {
     await this.findOne(id)
     const hotelsWithTravelTime = await this.prisma.hotel.findMany({
       where: {
-        travelTime: { id: id }
+        travelTime: {
+          some: { id: id}
+        }
       }
     });
     if (hotelsWithTravelTime.length > 0) {

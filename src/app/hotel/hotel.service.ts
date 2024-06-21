@@ -23,7 +23,7 @@ export class HotelService {
     const card = await this.cardService.create(createHotelDto.card)
     const description = await this.descriptionService.create(createHotelDto.description, files)
 
-    const hotelMovie = this.upload.groupFilesByField(files, ['hotelMovie'])['hotelMovie'][0]
+    const hotelMovie = this.upload.groupFilesByField(files, ['hotelMovie'])['hotelMovie']?.[0]
 
     const data: Prisma.HotelCreateInput = {
       card: { connect: { id: card.id } },
