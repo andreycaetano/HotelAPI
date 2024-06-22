@@ -160,7 +160,7 @@ export class HotelService {
       description = await this.descriptionService.update(findHotel.description.id, updateHotelDto.description, photo && photo )
     }
 
-    const hotelMovie = this.upload.groupFilesByField(files, ['hotelMovie'])?.[0]
+    const hotelMovie = this.upload.groupFilesByField(files, ['hotelMovie'])['hotelMovie']?.[0]
 
     const data: Prisma.HotelUpdateInput = {
       ...(updateHotelDto.card && { card: { connect: { id: card.id }}}),
