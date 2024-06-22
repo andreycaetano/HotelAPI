@@ -12,7 +12,7 @@ export class GaleryController {
   @UseInterceptors(
     FileInterceptor('galery', {
       fileFilter: (req, file, cb) => {
-        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp|svg|jfif|avif|apng|tiff|bmp|heic|heif)$/)) {
+        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp|svg|jfif|avif|apng|tiff|bmp|heic|heif|mp4|mkv|wmv|mov|avi|webm|flv|m4v|3gp|mpg|mpeg)$/)) {
           return cb(new Error('Only image files are allowed!'), false);
         }
         cb(null, true);
@@ -55,38 +55,5 @@ export class GaleryController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.galeryService.remove(id);
-  }
-
-  @Post('movie/:id')
-  @UseInterceptors(
-    FileInterceptor('hotelMovie', {
-      fileFilter: (req, file, cb) => {
-        if (!file.mimetype.match(/\/(mp4|mkv|wmv|mov|avi|webm|flv|m4v|3gp|mpg|mpeg)$/)) {
-          return cb(new Error('Only video files are allowed!'), false);
-        }
-        cb(null, true);
-      },
-    })
-  )
-  createMovie(@UploadedFile() file: Express.Multer.File) {
-    return this.galeryService.createMovie(file)
-  }
-
-  @Patch('movie/:id')
-  @UseInterceptors(
-    FileInterceptor('hotelMovie', {
-      fileFilter: (req, file, cb) => {
-        if (!file.mimetype.match(/\/(mp4|mkv|wmv|mov|avi|webm|flv|m4v|3gp|mpg|mpeg)$/)) {
-          return cb(new Error('Only video files are allowed!'), false);
-        }
-        cb(null, true);
-      },
-    })
-  )
-  updateMovie(
-    @UploadedFile() file: Express.Multer.File,
-    @Param('id') id: string
-  ) {
-    return this.galeryService.updateMovie(id, file)
   }
 }

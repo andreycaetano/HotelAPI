@@ -17,7 +17,7 @@ export class GaleryService {
 
     const createdImage = await this.prisma.galery.create({
       data: {
-        path: await this.upload.uploadFile(file, 'galery/photos')
+        path: await this.upload.uploadFile(file, 'galery')
       }
     })
 
@@ -49,7 +49,7 @@ export class GaleryService {
     const updateGalery = await this.prisma.galery.update({
       where: { id },
       data: {
-        path: await this.upload.uploadFile(file, 'galery/photos')
+        path: await this.upload.uploadFile(file, 'galery')
       }
     })
 
@@ -60,38 +60,5 @@ export class GaleryService {
     const photo = await this.findOne(id);
     await this.upload.deleteFile(photo.path);
     await this.prisma.galery.delete({ where: { id }})
-  }
-
-  async createMovie(file: Express.Multer.File): Promise<Galery> {
-    if (!file) {
-      throw new BadRequestException('Movie is required.')
-    }
-
-    const createdImage = await this.prisma.galery.create({
-      data: {
-        path: await this.upload.uploadFile(file, 'galery/movie')
-      }
-    })
-
-    return createdImage;
-  }
-
-  async updateMovie(id: string, file: Express.Multer.File): Promise<Galery> {
-    const movie = await this.findOne(id);
-
-    if (!file) {
-      throw new BadRequestException('Movie is required.')
-    };
-
-    await this.upload.deleteFile(movie.path)
-
-    const updateGalery = await this.prisma.galery.update({
-      where: { id },
-      data: {
-        path: await this.upload.uploadFile(file, 'galery/movie')
-      }
-    })
-
-    return updateGalery;
   }
 }
