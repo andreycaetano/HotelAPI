@@ -156,7 +156,7 @@ export class HotelService {
       card = await this.cardService.update(findHotel.card.id, updateHotelDto.card)
     }
     if (updateHotelDto.description) {
-      const photo = this.upload.groupFilesByField(files, ['author'])[0]
+      const photo = this.upload.groupFilesByField(files, ['author'])['author'][0]
       description = await this.descriptionService.update(findHotel.description.id, updateHotelDto.description, photo && photo )
     }
 
