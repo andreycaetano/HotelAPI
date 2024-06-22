@@ -39,10 +39,10 @@ constructor(
     const news = await this.findOne(id)
     const data: Prisma.NewsUpdateInput = {}
     if(updateNewsDto) {
-      if (!updateNewsDto.title) data.title = updateNewsDto.title
-      if (!updateNewsDto.description) data.description = updateNewsDto.description
-      if (!updateNewsDto.content) data.content = updateNewsDto.content
-      if (!updateNewsDto.author) data.author = updateNewsDto.author
+      if (updateNewsDto.title !== undefined) data.title = updateNewsDto.title
+      if (updateNewsDto.description !== undefined) data.description = updateNewsDto.description
+      if (updateNewsDto.content !== undefined) data.content = updateNewsDto.content
+      if (updateNewsDto.author !== undefined) data.author = updateNewsDto.author
     }
     if (file) {
       if (news.banner) {

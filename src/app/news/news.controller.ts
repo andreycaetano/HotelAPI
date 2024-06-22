@@ -28,8 +28,9 @@ export class NewsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewsDto: UpdateNewsDto) {
-    return this.newsService.update(id, updateNewsDto);
+  @UseInterceptors(FileInterceptor('banner'))
+  update(@Param('id') id: string, @Body() updateNewsDto: UpdateNewsDto, @UploadedFile() file: Express.Multer.File) {
+    return this.newsService.update(id, updateNewsDto, file);
   }
 
   @Delete(':id')
