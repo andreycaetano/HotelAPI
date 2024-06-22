@@ -60,7 +60,7 @@ export class HotelService {
   }
 
   async findAll(searchHotelDto: SearchHotelDto) {
-    const { name, ratingid, cityId, condition, traveltime, sport, city, facilities } = searchHotelDto;
+    const { name, ratingid, cityId, condition, traveltime, sport, city, facilities, countryId } = searchHotelDto;
 
     const where: any = {};
 
@@ -118,6 +118,14 @@ export class HotelService {
       where.facilities = {
         some: {
           id: facilities,
+        },
+      };
+    }
+
+    if (countryId && countryId.length > 0) {
+      where.city = {
+        countryId: {
+          equals: countryId,
         },
       };
     }

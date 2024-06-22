@@ -32,4 +32,8 @@ export class SearchHotelDto {
   @IsOptional()
   @IsString()
   facilities?: string;
+
+  @IsOptional()
+  @IsString()
+  countryId: string;
 }
