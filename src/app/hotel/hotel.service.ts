@@ -134,9 +134,7 @@ export class HotelService {
 
   async findOne(id: string) {
     const findHotel = await this.prisma.hotel.findUnique({
-      where: {
-        id: 
-      },
+      where: {id: id},
       select: this.allIncludeRelation()
     });
 
