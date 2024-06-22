@@ -71,44 +71,54 @@ export class HotelService {
     }
 
     if (ratingId && ratingId.length > 0) {
-      where.ratings = {
-        equals: ratingId
+      where.ratingId = {
+        equals: ratingId,
       };
     }
 
     if (cityId && cityId.length > 0) {
       where.cityId = {
-        equals: cityId
+        equals: cityId,
       };
     }
 
     if (condition && condition.length > 0) {
       where.conditions = {
-        equals: condition
+        some: {
+          id: condition,
+        },
       };
     }
 
     if (travelTime && travelTime.length > 0) {
-      where.travelTimeId = {
-        equals: travelTime,
+      where.travelTime = {
+        some: {
+          id: travelTime,
+        },
       };
     }
 
     if (sport && sport.length > 0) {
       where.sports = {
-        equals: sport
+        some: {
+          id: sport,
+        },
       };
     }
 
     if (city && city.length > 0) {
       where.city = {
-        equals: city,
+        name: {
+          equals: city,
+        },
       };
     }
 
     if (facilities && facilities.length > 0) {
       where.facilities = {
-        euqals: facilities
+        some: {
+          id: facilities,
+        },
       };
     }
     return await this.prisma.hotel.findMany({where ,select: this.allIncludeRelation()});
