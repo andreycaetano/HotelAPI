@@ -33,7 +33,7 @@ export class UploadService {
     try {
       await this.s3.send(command);
 
-      const objectUrl = `${process.env.AWS_S3_BUCKET_NAME}/${key}`;
+      const objectUrl = `${key}`;
 
       return objectUrl;
     } catch (error) {
