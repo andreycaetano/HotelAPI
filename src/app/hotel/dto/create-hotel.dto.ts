@@ -1,7 +1,6 @@
-import { IsArray, IsBoolean, IsJSON, IsString, ValidateNested } from "class-validator";
+import { IsJSON, IsString } from "class-validator";
 import { CreateCardDto } from "../card/dto/create-card.dto";
 import { CreateDescriptionDto } from "../description/dto/create-description.dto";
-import { Transform, Type } from "class-transformer";
 
 export class CreateHotelDto {
     @IsString()

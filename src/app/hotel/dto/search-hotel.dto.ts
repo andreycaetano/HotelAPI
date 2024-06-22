@@ -7,7 +7,7 @@ export class SearchHotelDto {
 
   @IsOptional()
   @IsString()
-  ratingId?: string;
+  ratingid?: string;
 
   @IsOptional()
   @IsString()
