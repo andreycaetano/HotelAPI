@@ -52,7 +52,9 @@ constructor(
     }
     const updatedNews = await this.prisma.news.update({
       where: { id },
-      data
+      data: {
+        ...data
+      }
     })
     return updatedNews;
   }
