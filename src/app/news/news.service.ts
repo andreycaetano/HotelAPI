@@ -15,12 +15,11 @@ constructor(
   async create(createNewsDto: CreateNewsDto, file: Express.Multer.File) {
     const data: Prisma.NewsCreateInput = {
       ...createNewsDto,
-      banner: undefined
+      banner: await this.upload.uploadFile(file, 'news')
     }
 
     const news = await this.prisma.news.create({ data });
-    const inserBannerNews = await this.update(news.id, undefined,file)
-    return inserBannerNews;
+    return news;
   }
 
   async findAll() {
@@ -48,7 +47,7 @@ constructor(
       if (news.banner) {
         await this.upload.deleteFile(news.banner)
       }
-      data.banner = await this.upload.uploadFile(file, `news/${id}`)
+      data.banner = await this.upload.uploadFile(file, `news`)
     }
     const updatedNews = await this.prisma.news.update({
       where: { id },

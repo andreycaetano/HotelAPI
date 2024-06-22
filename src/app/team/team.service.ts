@@ -45,7 +45,7 @@ export class TeamService {
       if(team.photo != undefined) {
         await this.upload.deleteFile(team.photo)
       }
-      data.photo = await this.upload.uploadFile(file, `team/${id}`)
+      data.photo = await this.upload.uploadFile(file, `team`)
     }
     const updatedTeam = await this.prisma.team.update({
       where: { id },

@@ -15,11 +15,10 @@ export class SliderService {
   async create(createSliderDto: CreateSliderDto, file: Express.Multer.File): Promise<Slider> {
     const data: Prisma.SliderCreateInput = {
       ...createSliderDto,
-      image: undefined
+      image: await this.upload.uploadFile(file, 'slider')
     }
     const slider = await this.prisma.slider.create({ data });
-    const insertImage = await this.update(slider.id, undefined, file)
-    return insertImage;
+    return slider;
   }
 
   async findAll(): Promise<Slider[]> {
@@ -49,7 +48,7 @@ export class SliderService {
       if (slider.image) {
         await this.upload.deleteFile(slider.image)
       }
-      data.image = await this.upload.uploadFile(file, `slider/${id}`);
+      data.image = await this.upload.uploadFile(file, `slider`);
     }
 
     const updatedSlider = await this.prisma.slider.update({
