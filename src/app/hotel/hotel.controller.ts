@@ -42,6 +42,16 @@ export class HotelController {
   }
 
   @Patch(':id')
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      fileFilter: (req, file, cb) => {
+        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|mp4|mkv|wmv|mov|avi|webm|flv|m4v|3gp|mpg|mpeg|webp|svg|jfif|avif|apng|tiff|bmp|heic|heif)$/)) {
+          return cb(new Error('Only image files are allowed!'), false);
+        }
+        cb(null, true);
+      },
+    })
+  )
   update(@Param('id') id: string, @Body() updateHotelDto: UpdateHotelDto) {
     return this.hotelService.update(id, updateHotelDto);
   }
