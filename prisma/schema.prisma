@@ -38,8 +38,8 @@ model City {
 }
 
 model TravelTime {
-  id          String @id @default(uuid())
-  travel_time String @unique @db.VarChar(255)
+  id          String  @id @default(uuid())
+  travel_time String  @unique @db.VarChar(255)
   hotel       Hotel[]
 }
 
@@ -111,7 +111,7 @@ model HotelImages {
 model Hotel {
   id            String        @id @default(uuid())
   name          String        @db.VarChar(255)
-  movie         String?        @db.VarChar(255)
+  movie         String?       @db.VarChar(255)
   promotion     Boolean       @default(false)
   cardId        String
   descriptionId String
@@ -121,7 +121,7 @@ model Hotel {
   conditions    Conditions[]
   facilities    Facilities[]
   sports        Sports[]
-  travelTime    TravelTime[] 
+  travelTime    TravelTime[]
 
   ratings     Ratings      @relation(fields: [ratingId], references: [id])
   city        City         @relation(fields: [cityId], references: [id])
@@ -130,6 +130,32 @@ model Hotel {
 }
 
 model Galery {
-  id            String        @id @default(uuid())
-  path          String        @db.VarChar()
+  id   String @id @default(uuid())
+  path String @db.VarChar()
+}
+
+model News {
+  id          String   @id @default(uuid())
+  title       String   @db.VarChar(255)
+  description String   @db.Text()
+  content     String   @db.Text()
+  banner      String   @db.VarChar(255)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Slider {
+  id          String @id @default(uuid())
+  title       String @db.VarChar(255)
+  information String @db.VarChar(255)
+  comment     String @db.VarChar(255)
+  author      String @db.VarChar(255)
+  image       String @db.VarChar()
+}
+
+model Team {
+  id    String @id @default(uuid())
+  name  String @db.VarChar(255)
+  photo String @db.VarChar()
+  role  String @db.VarChar()
 }

@@ -7,6 +7,10 @@ import { AuthModule } from './app/auth/auth.module';
 import { JwtAuthGuard } from './app/auth/guards/jwtAuth.guard';
 import { ConditionModule } from './app/condition/condition.module';
 import { FacilityModule } from './app/facility/facility.module';
+import { GaleryModule } from './app/galery/galery.module';
+import { HotelModule } from './app/hotel/hotel.module';
+import { MailchimpModule } from './app/mailchimp/mailchimp.module';
+import { NewsModule } from './app/news/news.module';
 import { RatingModule } from './app/rating/rating.module';
 import { SportModule } from './app/sport/sport.module';
 import { TravelTimeModule } from './app/travel-time/travel-time.module';
@@ -17,9 +21,8 @@ import { CustomLoggerService } from './common/logger/logger.service';
 import { ErrorMiddleware } from './common/middlewares/error.middleware';
 import { PrismaModule } from './database/prisma/prisma.module';
 import { UploadModule } from './upload/upload.module';
-import { HotelModule } from './app/hotel/hotel.module';
-import { MailchimpModule } from './app/mailchimp/mailchimp.module';
-import { GaleryModule } from './app/galery/galery.module';
+import { SliderModule } from './app/slider/slider.module';
+import { TeamModule } from './app/team/team.module';
 
 @Module({
   imports: [
@@ -39,6 +42,9 @@ import { GaleryModule } from './app/galery/galery.module';
     HotelModule,
     MailchimpModule,
     GaleryModule,
+    NewsModule,
+    SliderModule,
+    TeamModule,
   ],
   controllers: [],
   providers: [
