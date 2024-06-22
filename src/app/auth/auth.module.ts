@@ -14,7 +14,7 @@ import { AccountModule } from '../account/account.module';
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '30d' },
+      signOptions: { expiresIn: '2h' },
     }),
   ],
   controllers: [AuthController],
