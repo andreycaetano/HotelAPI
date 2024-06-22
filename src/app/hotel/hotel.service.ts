@@ -135,7 +135,7 @@ export class HotelService {
   async findOne(id: string) {
     const findHotel = await this.prisma.hotel.findUnique({
       where: {
-        id: id
+        id: 
       },
       select: this.allIncludeRelation()
     });
@@ -192,7 +192,7 @@ export class HotelService {
     }
 
     await this.prisma.hotel.update({
-      where: { id },
+      where: { id: id },
       data
     });
 
