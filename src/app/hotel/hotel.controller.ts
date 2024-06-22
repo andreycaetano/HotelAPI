@@ -52,8 +52,8 @@ export class HotelController {
       },
     })
   )
-  update(@Param('id') id: string, @Body() updateHotelDto: UpdateHotelDto) {
-    return this.hotelService.update(id, updateHotelDto);
+  update(@Param('id') id: string, @Body() updateHotelDto: UpdateHotelDto, @UploadedFiles() files: Express.Multer.File[]) {
+    return this.hotelService.update(id, updateHotelDto, files);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
