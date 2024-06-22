@@ -35,5 +35,5 @@ export class SearchHotelDto {
 
   @IsOptional()
   @IsString()
-  countryId: string;
+  country: string;
 }
