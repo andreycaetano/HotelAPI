@@ -57,9 +57,9 @@ export class GaleryController {
     return this.galeryService.remove(id);
   }
 
-  @Post('movie/:id')
+  @Post('movie')
   @UseInterceptors(
-    FileInterceptor('hotelMovie', {
+    FileInterceptor('galeryMovie', {
       fileFilter: (req, file, cb) => {
         if (!file.mimetype.match(/\/(mp4|mkv|wmv|mov|avi|webm|flv|m4v|3gp|mpg|mpeg)$/)) {
           return cb(new Error('Only video files are allowed!'), false);
@@ -74,7 +74,7 @@ export class GaleryController {
 
   @Patch('movie/:id')
   @UseInterceptors(
-    FileInterceptor('hotelMovie', {
+    FileInterceptor('galeryMovie', {
       fileFilter: (req, file, cb) => {
         if (!file.mimetype.match(/\/(mp4|mkv|wmv|mov|avi|webm|flv|m4v|3gp|mpg|mpeg)$/)) {
           return cb(new Error('Only video files are allowed!'), false);
