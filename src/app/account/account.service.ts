@@ -65,7 +65,7 @@ export class AccountService {
     await this.findOne(id);
     const data: Prisma.AccountUpdateInput = {
       ...updateAccountDto,
-      password: updateAccountDto.password ?? await bcrypt.hash(updateAccountDto.password, 10)
+      password: updateAccountDto.password && await bcrypt.hash(updateAccountDto.password, 10)
     };
     const updatedAccount = await this.prisma.account.update({
       where: { id },
