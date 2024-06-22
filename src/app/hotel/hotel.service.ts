@@ -73,7 +73,7 @@ export class HotelService {
       where.ratings = {
         some: {
           id: {
-            in: ratingId,
+            in: JSON.parse(ratingId as unknown as string),
           },
         },
       };
@@ -81,7 +81,7 @@ export class HotelService {
 
     if (cityId && cityId.length > 0) {
       where.cityId = {
-        in: cityId,
+        in: JSON.parse(cityId as unknown as string),
       };
     }
 
@@ -89,7 +89,7 @@ export class HotelService {
       where.conditions = {
         some: {
           id: {
-            in: condition,
+            in: JSON.parse(condition as unknown as string),
           },
         },
       };
@@ -97,7 +97,7 @@ export class HotelService {
 
     if (travelTime && travelTime.length > 0) {
       where.travelTimeId = {
-        in: travelTime,
+        in: JSON.parse(travelTime as unknown as string),
       };
     }
 
@@ -105,7 +105,7 @@ export class HotelService {
       where.sports = {
         some: {
           id: {
-            in: sport,
+            in: JSON.parse(sport as unknown as string),
           },
         },
       };
@@ -113,7 +113,7 @@ export class HotelService {
 
     if (city && city.length > 0) {
       where.city = {
-        in: city,
+        in: JSON.parse(city as unknown as string),
       };
     }
 
@@ -121,7 +121,7 @@ export class HotelService {
       where.facilities = {
         some: {
           id: {
-            in: facilities,
+            in: JSON.parse(facilities as unknown as string),
           },
         },
       };

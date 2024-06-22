@@ -3,7 +3,7 @@ import { IsOptional, IsString } from 'class-validator';
 export class SearchHotelDto {
   @IsOptional()
   @IsString()
-  name?: string[];
+  name?: string;
 
   @IsOptional()
   @IsString()
