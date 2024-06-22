@@ -14,4 +14,7 @@ export class CreateNewsDto {
 
     @Type(() => FileInterceptor)
     banner: Express.Multer.File;
+
+    @IsString()
+    author: string;
 }

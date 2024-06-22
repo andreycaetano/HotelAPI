@@ -140,6 +140,7 @@ model News {
   description String   @db.Text()
   content     String   @db.Text()
   banner      String   @db.VarChar(255)
+  author      String   @db.VarChar(255)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 }

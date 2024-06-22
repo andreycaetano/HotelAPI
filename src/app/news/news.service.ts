@@ -42,6 +42,7 @@ constructor(
       if (updateNewsDto.title !== undefined) data.title = updateNewsDto.title
       if (updateNewsDto.description !== undefined) data.description = updateNewsDto.description
       if (updateNewsDto.content !== undefined) data.content = updateNewsDto.content
+      if (updateNewsDto.author !== undefined) data.author = updateNewsDto.author
     }
     if (file) {
       if (news.banner) {
