@@ -8,6 +8,7 @@ import { CreateHotelDto } from './dto/create-hotel.dto';
 import { SearchHotelDto } from './dto/search-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { HotelImagesService } from './hotel-images/hotel-images.service';
+import { equals } from 'class-validator';
 
 @Injectable()
 export class HotelService {
@@ -65,65 +66,49 @@ export class HotelService {
 
     if (name && name.length > 0) {
       where.name = {
-        in: name,
+        equals: name,
       };
     }
 
     if (ratingId && ratingId.length > 0) {
       where.ratings = {
-        some: {
-          id: {
-            in: JSON.parse(ratingId as unknown as string),
-          },
-        },
+        equals: ratingId
       };
     }
 
     if (cityId && cityId.length > 0) {
       where.cityId = {
-        in: JSON.parse(cityId as unknown as string),
+        equals: cityId
       };
     }
 
     if (condition && condition.length > 0) {
       where.conditions = {
-        some: {
-          id: {
-            in: JSON.parse(condition as unknown as string),
-          },
-        },
+        equals: condition
       };
     }
 
     if (travelTime && travelTime.length > 0) {
       where.travelTimeId = {
-        in: JSON.parse(travelTime as unknown as string),
+        equals: travelTime,
       };
     }
 
     if (sport && sport.length > 0) {
       where.sports = {
-        some: {
-          id: {
-            in: JSON.parse(sport as unknown as string),
-          },
-        },
+        equals: sport
       };
     }
 
     if (city && city.length > 0) {
       where.city = {
-        in: JSON.parse(city as unknown as string),
+        equals: city,
       };
     }
 
     if (facilities && facilities.length > 0) {
       where.facilities = {
-        some: {
-          id: {
-            in: JSON.parse(facilities as unknown as string),
-          },
-        },
+        euqals: facilities
       };
     }
     return await this.prisma.hotel.findMany({where ,select: this.allIncludeRelation()});

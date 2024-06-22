@@ -7,29 +7,29 @@ export class SearchHotelDto {
 
   @IsOptional()
   @IsString()
-  ratingId?: string[];
+  ratingId?: string;
 
   @IsOptional()
   @IsString()
-  cityId?: string[];
+  cityId?: string;
 
   @IsOptional()
   @IsString()
-  condition?: string[];
+  condition?: string;
 
   @IsOptional()
   @IsString()
-  travelTime?: string[];
+  travelTime?: string;
 
   @IsOptional()
   @IsString()
-  sport?: string[];
+  sport?: string;
 
   @IsOptional()
   @IsString()
-  city?: string[];
+  city?: string;
 
   @IsOptional()
   @IsString()
-  facilities?: string[];
+  facilities?: string;
 }
