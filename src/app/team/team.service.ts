@@ -16,11 +16,10 @@ export class TeamService {
   async create(createTeamDto: CreateTeamDto, file: Express.Multer.File): Promise<Team> {
     const data: Prisma.TeamCreateInput = {
       ...createTeamDto,
-      photo: undefined
+      photo: await this.upload.uploadFile(file, 'team')
     }
     const team = await this.prisma.team.create({ data })
-    const insertPhoto = await this.update(team.id, undefined, file)
-    return insertPhoto;
+    return team;
   }
 
   async findAll(): Promise<Team[]> {
