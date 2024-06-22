@@ -19,7 +19,7 @@ export class SearchHotelDto {
 
   @IsOptional()
   @IsString()
-  travelTime?: string;
+  traveltime?: string;
 
   @IsOptional()
   @IsString()
