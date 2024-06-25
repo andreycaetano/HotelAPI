@@ -191,7 +191,9 @@ export class HotelService {
 
     await this.prisma.hotel.update({
       where: { id: id },
-      data
+      data: {
+        ...data
+      }
     });
 
     if (files.length > 0) {

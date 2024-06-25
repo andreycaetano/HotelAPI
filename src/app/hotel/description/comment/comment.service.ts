@@ -33,12 +33,19 @@ export class CommentService {
 
     async update (commentId: string, updateCommentDto: UpdateCommentDto, file?: Express.Multer.File): Promise<Comment> {
         const findComment = await this.findOne(commentId);
-        const data: Prisma.CommentUpdateWithoutDescriptionInput = JSON.parse(updateCommentDto as unknown as string)
+        const data: Prisma.CommentUpdateWithoutDescriptionInput = {}
+        if (updateCommentDto) {
+            if (updateCommentDto.author !== undefined) data.author = updateCommentDto.author;
+            if (updateCommentDto.comment !== undefined) data.comment = updateCommentDto.comment;
+        }
         let photoKey = null
         if (file) {
-            await this.upload.deleteFile(findComment.photo);
+            if (findComment.photo) {
+                await this.upload.deleteFile(findComment.photo);
+            }
             photoKey = await this.upload.uploadFile(file, 'hotel/authors')
         }
+        
         const updatedComment = await this.prisma.comment.update({
             where: { id: commentId},
             data: {

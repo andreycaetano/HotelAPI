@@ -15,22 +15,22 @@ datasource db {
 
 model Account {
   id       String @id @default(uuid())
-  username String @unique @db.VarChar(255)
-  password String @db.VarChar(255)
-  email    String @unique @db.VarChar(255)
-  role     String @default("user") @db.VarChar(5)
+  username String @unique @db.VarChar()
+  password String @db.VarChar()
+  email    String @unique @db.VarChar()
+  role     String @default("user") @db.VarChar()
 }
 
 model Country {
   id   String @id @default(uuid())
-  name String @unique @db.VarChar(255)
+  name String @unique @db.VarChar()
 
   cities City[]
 }
 
 model City {
   id   String @id @default(uuid())
-  name String @db.VarChar(255)
+  name String @db.VarChar()
 
   hotel     Hotel[]
   countryId String
@@ -39,42 +39,42 @@ model City {
 
 model TravelTime {
   id          String  @id @default(uuid())
-  travel_time String  @unique @db.VarChar(255)
+  travel_time String  @unique @db.VarChar()
   hotel       Hotel[]
 }
 
 model Sports {
   id    String  @id @default(uuid())
-  sport String  @unique @db.VarChar(255)
+  sport String  @unique @db.VarChar()
   hotel Hotel[]
 }
 
 model Ratings {
   id     String  @id @default(uuid())
-  rating String  @unique @db.VarChar(255)
+  rating String  @unique @db.VarChar()
   hotel  Hotel[]
 }
 
 model Conditions {
   id        String  @id @default(uuid())
-  condition String  @unique @db.VarChar(255)
+  condition String  @unique @db.VarChar()
   hotel     Hotel[]
 }
 
 model Facilities {
   id       String @id @default(uuid())
-  facility String @db.VarChar(255)
-  icon     String @db.VarChar(255)
+  facility String @db.VarChar()
+  icon     String @db.VarChar()
 
   hotel Hotel[]
 }
 
 model Descriptions {
   id            String @id @default(uuid())
-  destination   String @db.VarChar(255)
-  accommodation String @db.VarChar(255)
-  activities    String @db.VarChar(255)
-  commentId     String @db.VarChar(255)
+  destination   String @db.VarChar()
+  accommodation String @db.VarChar()
+  activities    String @db.VarChar()
+  commentId     String @db.VarChar()
 
   comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   hotel   Hotel[]
@@ -82,27 +82,27 @@ model Descriptions {
 
 model Comment {
   id      String @id @default(uuid())
-  author  String @db.VarChar(255)
-  photo   String @db.VarChar(255)
-  comment String @db.VarChar(255)
+  author  String @db.VarChar()
+  photo   String @db.VarChar()
+  comment String @db.VarChar()
 
   description Descriptions[]
 }
 
 model Card {
   id              String @id @default(uuid())
-  title           String @db.VarChar(255)
-  description_big String @db.VarChar(255)
-  description1    String @db.VarChar(255)
-  description2    String @db.VarChar(255)
-  description3    String @db.VarChar(255)
+  title           String @db.VarChar()
+  description_big String @db.VarChar()
+  description1    String @db.VarChar()
+  description2    String @db.VarChar()
+  description3    String @db.VarChar()
 
   hotel Hotel[]
 }
 
 model HotelImages {
   id      String @id @default(uuid())
-  path    String @db.VarChar(255)
+  path    String @db.VarChar()
   hotelId String
 
   hotel Hotel @relation(fields: [hotelId], references: [id])
@@ -110,8 +110,8 @@ model HotelImages {
 
 model Hotel {
   id            String        @id @default(uuid())
-  name          String        @db.VarChar(255)
-  movie         String?       @db.VarChar(255)
+  name          String        @db.VarChar()
+  movie         String?       @db.VarChar()
   promotion     Boolean       @default(false)
   cardId        String
   descriptionId String
@@ -136,27 +136,27 @@ model Galery {
 
 model News {
   id          String   @id @default(uuid())
-  title       String   @db.VarChar(255)
+  title       String   @db.VarChar()
   description String   @db.Text()
   content     String   @db.Text()
-  banner      String   @db.VarChar(255)
-  author      String   @db.VarChar(255)
+  banner      String   @db.VarChar()
+  author      String   @db.VarChar()
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 }
 
 model Slider {
   id          String @id @default(uuid())
-  title       String @db.VarChar(255)
-  information String @db.VarChar(255)
-  comment     String @db.VarChar(255)
-  author      String @db.VarChar(255)
+  title       String @db.VarChar()
+  information String @db.VarChar()
+  comment     String @db.VarChar()
+  author      String @db.VarChar()
   image       String @db.VarChar()
 }
 
 model Team {
   id    String @id @default(uuid())
-  name  String @db.VarChar(255)
+  name  String @db.VarChar()
   photo String @db.VarChar()
   role  String @db.VarChar()
 }

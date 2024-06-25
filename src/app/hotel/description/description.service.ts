@@ -53,7 +53,7 @@ export class DescriptionService {
         const findDescription = await this.findOne(descriptionId);
 
         if (data.comment) {
-            await this.commentService.update(data.comment.id, data.comment, file);
+            await this.commentService.update(findDescription.commentId, data.comment, file);
         };
         
         const dataDescription: Prisma.DescriptionsUpdateWithoutHotelInput = {
