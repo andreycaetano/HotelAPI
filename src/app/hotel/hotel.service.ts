@@ -49,12 +49,14 @@ export class HotelService {
     const createdHotel = await this.prisma.hotel.create({ data });
 
     await this.hotelImageService.create(createdHotel.id, files)
-    await this.prisma.hotel.update({
-      where: { id: createdHotel.id },
-      data: {
-        movie: await this.upload.uploadFile(hotelMovie, `hotel/${createdHotel.id}/movie`)
-      }
-    })
+    if (hotelMovie) {
+      await this.prisma.hotel.update({
+        where: { id: createdHotel.id },
+        data: {
+          movie: await this.upload.uploadFile(hotelMovie, `hotel/${createdHotel.id}/movie`)
+        }
+      })
+    }
 
     return await this.findOne(createdHotel.id);
   }
