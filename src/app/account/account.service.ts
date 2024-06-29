@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { PrismaService } from 'src/database/prisma/prisma.service';
@@ -11,7 +11,11 @@ import { AccountConflictException } from './errors/accountConflict.error';
 export class AccountService {
   constructor(private readonly prisma : PrismaService) {}
 
-  async create(createAccountDto: CreateAccountDto): Promise<Account> {
+  async create(createAccountDto: CreateAccountDto, user: Account): Promise<Account> {
+    if (user.role != 'Admin') {
+      throw new UnauthorizedException('You do not have permissions for this actionyou do not have permissions for this action, contact your administrator')
+    }
+
     const data: Prisma.AccountCreateInput = {
       ...createAccountDto,
       password: await bcrypt.hash(createAccountDto.password, 10)

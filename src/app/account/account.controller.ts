@@ -3,15 +3,16 @@ import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { IsPublic } from '../auth/decorators/isPublic.decorator';
+import { CurrentUser } from '../auth/decorators/currentUser.decorator';
+import { Account } from '@prisma/client';
 
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
-  @IsPublic()
   @Post('register')
-  create(@Body() createAccountDto: CreateAccountDto) {
-    return this.accountService.create(createAccountDto);
+  create(@Body() createAccountDto: CreateAccountDto, @CurrentUser() user: Account) {
+    return this.accountService.create(createAccountDto, user);
   }
 
   @Get()

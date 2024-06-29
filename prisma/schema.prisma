@@ -109,19 +109,21 @@ model HotelImages {
 }
 
 model Hotel {
-  id            String        @id @default(uuid())
-  name          String        @db.VarChar()
-  movie         String?       @db.VarChar()
-  promotion     Boolean       @default(false)
-  cardId        String
-  descriptionId String
-  cityId        String
-  ratingId      String
-  images        HotelImages[]
-  conditions    Conditions[]
-  facilities    Facilities[]
-  sports        Sports[]
-  travelTime    TravelTime[]
+  id             String        @id @default(uuid())
+  name           String        @db.VarChar()
+  movie          String?       @db.VarChar()
+  promotion      Boolean       @default(false)
+  slider_display Boolean       @default(false)
+  cardId         String
+  descriptionId  String
+  cityId         String
+  ratingId       String
+  description_card String
+  images         HotelImages[]
+  conditions     Conditions[]
+  facilities     Facilities[]
+  sports         Sports[]
+  travelTime     TravelTime[]
 
   ratings     Ratings      @relation(fields: [ratingId], references: [id])
   city        City         @relation(fields: [cityId], references: [id])

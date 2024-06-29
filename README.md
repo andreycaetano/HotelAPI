@@ -1,73 +1,94 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# HotelHub API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este projeto é uma API backend para um site que publica todas as informações sobre hotéis. A API permitirá a criação, leitura, atualização e exclusão (CRUD) de dados de hotéis, além de fornecer funcionalidades de filtragem avançada por diversos critérios.
 
-## Description
+## Funcionalidades Principais
+* CRUD de contas de usuário, endereços, condições, facilidades, galerias, hotéis, notícias, avaliações, slides, esportes, equipe, e tempos de viagem.
+* Exibição de fotos, vídeos e comentários de usuários.
+* Autenticação e autorização usando JWT.
+* Filtragem de hotéis por nome, facilidades, acomodações, tempo de viagem, média de avaliações, esportes disponíveis, quantidade de estrelas, entre outros.
+* Integração com Mailchimp para gerenciamento de contatos e envio de emails.
+## Detalhes Técnicos
+### Linguagem de Programação e Framework:
+Linguagem: NodeJS
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Framework: NestJS
 
-## Installation
+### Banco de Dados:
+
+Tipo: PostgreSQL
+
+ORM: Prisma
+
+### Autenticação e Autorização:
+
+Método de Autenticação: JWT
+
+#### Regras de Autorização:
+Rotas de leitura (exceto de usuário) são públicas.
+
+Rotas de criação, deleção e atualização de informações são restritas a usuários autenticados.
+
+Criação de usuário é restrita ao administrador.
+
+### Infraestrutura:
+
+Containerização: Docker (Dockerfile disponível para rodar localmente).
+
+Deploy: Render
+
+### Testes:
+
+Testes em desenvolvimento.
+## Endpoints e Rotas
+* **/account:** CRUD de accounts
+* **/address:** CRUD de address, incluindo **/address/city** e **/address/country**
+* **/auth/login:** Gerenciamento de login e autenticação de usuários
+* **/condition:** CRUD de condition
+* **/facility:** CRUD de facility
+* **/gallery:** CRUD de gallery
+* **/hotel:** CRUD de hotel
+* **/mailchimp:** Integração com Mailchimp para gerenciamento de contatos e envio de emails
+* **/news:** CRUD de news
+* **/rating:** CRUD de rating
+* **/slider:** CRUD de slides do site
+* **/sport:** CRUD de sports
+* **/team:** CRUD de equipe dos hotéis (fotos, cargos, localização)
+* **/travel-time:** CRUD de travel time
+## Variáveis de Ambiente
+
+Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu .env
+
+
+`PORT`
+`DATABASE_URL`
+`JWT_SECRET`
+
+`AWS_S3_ENDPOINT`
+`AWS_ACCESS_KEY_ID`
+`AWS_SECRET_ACCESS_KEY`
+`AWS_REGION`
+`AWS_S3_BUCKET_NAME`
+
+`MAILCHIMP_URL`
+`API_KEY_MAILCHIMP`
+## Instalação
+
+Instale dependencias com npm
 
 ```bash
-$ npm install
+  npm install
 ```
 
-## Running the app
-
+Faça a migração do banco de dados
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+  npx prisma migrate dev
 ```
 
-## Test
-
+Rode a aplicação
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  npm run start
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Acesse a aplicação em: http://localhost:${PORT} (Substitua "PORT" pela porta configurada na variável de ambiente port colocado em seu .env)

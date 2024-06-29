@@ -38,5 +38,11 @@ export class CreateHotelDto {
     @IsOptional()
     @Type(() => FileInterceptor)
     hotelMovie: Express.Multer.File
+
+    @IsString()
+    slider_display: string;
+
+    @IsString()
+    description_card: string;
 }
 
