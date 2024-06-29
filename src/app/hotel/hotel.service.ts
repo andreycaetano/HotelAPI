@@ -26,7 +26,7 @@ export class HotelService {
 
     const hotelMovie = this.upload.groupFilesByField(files, ['hotelMovie'])['hotelMovie']?.[0]
 
-    const data: Prisma.HotelCreateInput = {
+    const data = {
       card: { connect: { id: card.id } },
       description: { connect: { id: description.id } },
       city: { connect: { id: createHotelDto.cityId } },
