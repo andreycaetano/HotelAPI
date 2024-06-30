@@ -8,7 +8,6 @@ import { CreateHotelDto } from './dto/create-hotel.dto';
 import { SearchHotelDto } from './dto/search-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { HotelImagesService } from './hotel-images/hotel-images.service';
-import { equals } from 'class-validator';
 
 @Injectable()
 export class HotelService {
@@ -26,7 +25,7 @@ export class HotelService {
 
     const hotelMovie = this.upload.groupFilesByField(files, ['hotelMovie'])['hotelMovie']?.[0]
 
-    const data = {
+    const data: Prisma.HotelCreateInput = {
       card: { connect: { id: card.id } },
       description: { connect: { id: description.id } },
       city: { connect: { id: createHotelDto.cityId } },
@@ -45,7 +44,7 @@ export class HotelService {
         connect: JSON.parse(createHotelDto.travelTime).map((travelTimeId: string) => ({ id: travelTimeId }))
       },
       promotion: Boolean(createHotelDto.promotion),
-      slider_display: Boolean(createHotelDto['slider_display']),
+      sliderDisplay: Boolean(createHotelDto['slider_display']),
       description_card: createHotelDto.description_card
     }
     const createdHotel = await this.prisma.hotel.create({ data });
@@ -186,7 +185,7 @@ export class HotelService {
         }
       }),
       ...(updateHotelDto.promotion !== undefined && { promotion: Boolean(updateHotelDto.promotion)}),
-      ...(updateHotelDto.slider_display !== undefined && { slider_display: Boolean(updateHotelDto.slider_display)}),
+      ...(updateHotelDto.slider_display !== undefined && { sliderDisplay: Boolean(updateHotelDto.slider_display)}),
       ...(updateHotelDto.travelTime && {
         travelTime: {
           connect: JSON.parse(updateHotelDto.travelTime).map((travelTimeId: string) => ({ id: travelTimeId }))

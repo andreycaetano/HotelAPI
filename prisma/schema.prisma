@@ -113,7 +113,7 @@ model Hotel {
   name           String        @db.VarChar()
   movie          String?       @db.VarChar()
   promotion      Boolean       @default(false)
-  slider_display Boolean       
+  sliderDisplay  Boolean       
   cardId         String
   descriptionId  String
   cityId         String
