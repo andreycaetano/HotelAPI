@@ -251,7 +251,9 @@ export class HotelService {
       ratings: true,
       conditions: true,
       facilities: true,
-      sports: true
+      sports: true,
+      sliderDisplay: true,
+      descriptionCard: true
     }
   }
 
