@@ -25,7 +25,8 @@ export class HotelService {
 
     const hotelMovie = this.upload.groupFilesByField(files, ['hotelMovie'])['hotelMovie']?.[0]
 
-    const data: Prisma.HotelCreateInput = {      description_card: createHotelDto.description_card,
+    const data: Prisma.HotelCreateInput = {      
+      descriptionCard: createHotelDto.description_card,
       sliderDisplay: createHotelDto.slider_display === 'true',
       card: { connect: { id: card.id } },
       description: { connect: { id: description.id } },
@@ -190,7 +191,7 @@ export class HotelService {
           connect: JSON.parse(updateHotelDto.travelTime).map((travelTimeId: string) => ({ id: travelTimeId }))
         }
       }),
-      ...(updateHotelDto.description_card !== undefined && {description_card: updateHotelDto.description_card})
+      ...(updateHotelDto.description_card !== undefined && {descriptionCard: updateHotelDto.description_card})
     }
 
     await this.prisma.hotel.update({

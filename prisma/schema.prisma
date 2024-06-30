@@ -118,7 +118,7 @@ model Hotel {
   descriptionId  String
   cityId         String
   ratingId       String
-  description_card String       @default("")
+  descriptionCard String       @default("")
   images         HotelImages[]
   conditions     Conditions[]
   facilities     Facilities[]
