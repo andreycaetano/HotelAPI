@@ -44,8 +44,8 @@ export class HotelService {
         connect: JSON.parse(createHotelDto.travelTime).map((travelTimeId: string) => ({ id: travelTimeId }))
       },
       promotion: Boolean(createHotelDto.promotion),
-      sliderDisplay: Boolean(createHotelDto['slider_display']),
-      description_card: createHotelDto.description_card
+      description_card: createHotelDto.description_card,
+      sliderDisplay: createHotelDto.slider_display === 'true',
     }
     const createdHotel = await this.prisma.hotel.create({ data });
 
