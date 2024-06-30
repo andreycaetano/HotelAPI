@@ -1,4 +1,4 @@
-import { IsJSON, IsOptional, IsString } from "class-validator";
+import { IsBooleanString, IsJSON, IsOptional, IsString } from "class-validator";
 import { CreateCardDto } from "../card/dto/create-card.dto";
 import { CreateDescriptionDto } from "../description/dto/create-description.dto";
 import { Type } from "class-transformer";
@@ -39,7 +39,7 @@ export class CreateHotelDto {
     @Type(() => FileInterceptor)
     hotelMovie: Express.Multer.File
 
-    @IsString()
+    @IsBooleanString()
     slider_display: string;
 
     @IsString()
