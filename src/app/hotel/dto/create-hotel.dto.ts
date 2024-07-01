@@ -8,7 +8,7 @@ export class CreateHotelDto {
     @IsString()
     name: string
 
-    @IsString()
+    @IsBooleanString()
     promotion: string;
     
     @IsString()
